@@ -44,7 +44,7 @@ export default function Home() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-[10px] font-mono tracking-widest text-red-400">
             <Skull className="h-3 w-3" />
-            SECURE_DARK_CHANNEL_ACTIVE
+            SECURE_CHANNEL_ACTIVE
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter font-sans leading-none" data-testid="text-main-title">
@@ -54,12 +54,12 @@ export default function Home() {
 
           <div className="h-px w-24 bg-red-500" />
 
-          <p className="text-muted-foreground max-w-xl leading-relaxed font-mono text-sm md:text-base" data-testid="text-description">
-            Elite operatives standing by. We specialize in <span className="text-white">target acquisition</span>, 
-            <span className="text-white"> data exfiltration</span>, and <span className="text-white">digital compromise</span>. 
+          <p className="text-gray-300 max-w-xl leading-relaxed font-mono text-base md:text-lg" data-testid="text-description">
+            Elite operatives standing by. We specialize in <span className="text-white font-semibold">target acquisition</span>, 
+            <span className="text-white font-semibold"> data exfiltration</span>, and <span className="text-white font-semibold">digital compromise</span>. 
             No target is beyond reach. Complete anonymity guaranteed.
             <br /><br />
-            <span className="text-red-400 font-bold">Submit your target. We execute.</span>
+            <span className="text-red-400 font-bold text-lg">Submit your target. We execute.</span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -92,17 +92,17 @@ export default function Home() {
               data-testid={`feature-${i}`}
             >
               <item.icon className="h-6 w-6 text-red-400" />
-              <h3 className="font-mono text-sm font-bold text-white tracking-widest">{item.title}</h3>
-              <p className="text-xs text-muted-foreground font-mono">{item.desc}</p>
+              <h3 className="font-mono text-base font-bold text-white tracking-widest">{item.title}</h3>
+              <p className="text-sm text-gray-300 font-mono leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}
         </div>
 
         <div className="mt-20 space-y-6">
           <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-border" />
-            <h2 className="font-mono text-xs tracking-widest text-muted-foreground">SERVICE_CATALOG</h2>
-            <div className="h-px flex-1 bg-border" />
+            <div className="h-px flex-1 bg-emerald-500/30" />
+            <h2 className="font-mono text-sm tracking-widest text-emerald-400 font-bold">SERVICE_CATALOG</h2>
+            <div className="h-px flex-1 bg-emerald-500/30" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -113,14 +113,14 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 + (i * 0.1), duration: 0.5 }}
               >
-                <Card className="bg-black/40 border-white/10 rounded-none hover:border-red-500/30 transition-colors group cursor-pointer" data-testid={`service-card-${i}`}>
+                <Card className="bg-black/40 border-emerald-500/20 rounded-none hover:border-emerald-500/50 transition-colors group cursor-pointer" data-testid={`service-card-${i}`}>
                   <CardContent className="p-6 space-y-3">
                     <div className="flex items-center justify-between">
-                      <service.icon className="h-5 w-5 text-red-400 group-hover:text-red-300 transition-colors" />
-                      <span className="text-[10px] font-mono text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-bold">{service.price}</span>
+                      <service.icon className="h-5 w-5 text-emerald-400 group-hover:text-emerald-300 transition-colors" />
+                      <span className="text-xs font-mono text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 font-bold">{service.price}</span>
                     </div>
-                    <h3 className="font-mono text-sm font-bold text-white tracking-wider">{service.title}</h3>
-                    <p className="text-xs text-muted-foreground font-mono leading-relaxed">{service.desc}</p>
+                    <h3 className="font-mono text-base font-bold text-white tracking-wider">{service.title}</h3>
+                    <p className="text-sm text-gray-300 font-mono leading-relaxed">{service.desc}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -138,21 +138,21 @@ export default function Home() {
             <Skull className="h-5 w-5 text-red-500" />
             <h3 className="font-mono text-sm font-bold text-red-400 tracking-wider">OPERATIONAL_GUIDELINES</h3>
           </div>
-          <ul className="space-y-2 text-xs font-mono text-muted-foreground" data-testid="guidelines-list">
-            <li className="flex items-start gap-2">
-              <span className="text-red-500">01.</span>
+          <ul className="space-y-3 text-sm font-mono text-gray-300" data-testid="guidelines-list">
+            <li className="flex items-start gap-3">
+              <span className="text-red-500 font-bold">01.</span>
               <span>All payments in cryptocurrency only. No refunds after operation commences.</span>
             </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-500">02.</span>
+            <li className="flex items-start gap-3">
+              <span className="text-red-500 font-bold">02.</span>
               <span>Provide detailed target information for accurate quotes and faster execution.</span>
             </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-500">03.</span>
+            <li className="flex items-start gap-3">
+              <span className="text-red-500 font-bold">03.</span>
               <span>Do not share our channel. Referral by existing clients only.</span>
             </li>
-            <li className="flex items-start gap-2">
-              <span className="text-red-500">04.</span>
+            <li className="flex items-start gap-3">
+              <span className="text-red-500 font-bold">04.</span>
               <span>We reserve the right to decline any contract at our discretion.</span>
             </li>
           </ul>
