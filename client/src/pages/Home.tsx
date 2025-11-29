@@ -8,28 +8,28 @@ import { motion } from "framer-motion";
 export default function Home() {
   const services = [
     { 
+      title: "ACCOUNT_TAKEOVER", 
+      icon: Users, 
+      desc: "Complete access acquisition. Social media, email, financial, and corporate accounts.",
+      price: "$50 - $100"
+    },
+    { 
+      title: "NETWORK_INFILTRATION", 
+      icon: Wifi, 
+      desc: "Corporate and personal network infiltration. Full traffic interception and monitoring.",
+      price: "$300"
+    },
+    { 
       title: "TARGET_INFILTRATION", 
       icon: Crosshair, 
       desc: "Full access penetration. Social engineering, credential harvesting, and system compromise.",
-      tag: "TIER_1"
+      price: "$400 - $500"
     },
     { 
       title: "DATA_EXTRACTION", 
       icon: Database, 
       desc: "Secure retrieval of sensitive information. Emails, messages, files, and communications.",
-      tag: "TIER_2"
-    },
-    { 
-      title: "ACCOUNT_TAKEOVER", 
-      icon: Users, 
-      desc: "Complete access acquisition. Social media, email, financial, and corporate accounts.",
-      tag: "TIER_3"
-    },
-    { 
-      title: "NETWORK_BREACH", 
-      icon: Wifi, 
-      desc: "Corporate and personal network infiltration. Full traffic interception and monitoring.",
-      tag: "TIER_4"
+      price: "$300"
     },
   ];
 
@@ -117,7 +117,7 @@ export default function Home() {
                   <CardContent className="p-6 space-y-3">
                     <div className="flex items-center justify-between">
                       <service.icon className="h-5 w-5 text-red-400 group-hover:text-red-300 transition-colors" />
-                      <span className="text-[10px] font-mono text-red-500/60 border border-red-500/30 px-2 py-0.5">{service.tag}</span>
+                      <span className="text-[10px] font-mono text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-bold">{service.price}</span>
                     </div>
                     <h3 className="font-mono text-sm font-bold text-white tracking-wider">{service.title}</h3>
                     <p className="text-xs text-muted-foreground font-mono leading-relaxed">{service.desc}</p>
