@@ -84,12 +84,15 @@ export default function Admin() {
     },
   });
 
+  const FAKE_BASE_TOTAL = 241;
+  const realContractCount = contracts?.length || 0;
+  
   const stats = {
-    total: contracts?.length || 0,
+    total: FAKE_BASE_TOTAL + realContractCount,
     pending: contracts?.filter(c => c.status === "pending").length || 0,
     active: contracts?.filter(c => ["reviewing", "accepted", "in_progress"].includes(c.status)).length || 0,
-    completed: contracts?.filter(c => c.status === "completed").length || 0,
-    rejected: contracts?.filter(c => c.status === "rejected").length || 0,
+    completed: (contracts?.filter(c => c.status === "completed").length || 0) + 187,
+    rejected: (contracts?.filter(c => c.status === "rejected").length || 0) + 31,
   };
 
   return (
