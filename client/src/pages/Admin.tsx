@@ -21,19 +21,17 @@ const statusColors: Record<string, string> = {
 };
 
 const typeLabels: Record<string, string> = {
-  infiltration: "DATA_INFILTRATION",
-  extraction: "ASSET_EXTRACTION",
-  audit: "SECURITY_AUDIT",
-  ddos: "STRESS_TESTING",
-  recovery: "ACCOUNT_RECOVERY",
+  target_infiltration: "TARGET_INFILTRATION",
+  data_extraction: "DATA_EXTRACTION",
+  account_takeover: "ACCOUNT_TAKEOVER",
+  network_breach: "NETWORK_BREACH",
 };
 
 const typeIcons: Record<string, React.ReactNode> = {
-  infiltration: <Target className="h-3 w-3" />,
-  extraction: <Database className="h-3 w-3" />,
-  audit: <Shield className="h-3 w-3" />,
-  ddos: <Activity className="h-3 w-3" />,
-  recovery: <Users className="h-3 w-3" />,
+  target_infiltration: <Target className="h-3 w-3" />,
+  data_extraction: <Database className="h-3 w-3" />,
+  account_takeover: <Users className="h-3 w-3" />,
+  network_breach: <Activity className="h-3 w-3" />,
 };
 
 export default function Admin() {
