@@ -10,13 +10,12 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import { Upload, ShieldAlert, Loader2, CheckCircle } from "lucide-react";
+import { Upload, ShieldAlert, Loader2, DollarSign } from "lucide-react";
 
 const formSchema = z.object({
   target: z.string().min(2, "Target identifier required"),
   type: z.enum(["target_infiltration", "data_extraction", "account_takeover", "network_breach"]),
   details: z.string().min(10, "More intelligence required"),
-  bounty: z.string().min(1, "Bounty offer required"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -30,7 +29,6 @@ export default function Request() {
       target: "",
       type: "target_infiltration",
       details: "",
-      bounty: "",
     },
   });
 
@@ -159,24 +157,21 @@ export default function Request() {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="bounty"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[10px] uppercase font-mono tracking-widest text-muted-foreground">Bounty Offer (BTC/XMR/USD)</FormLabel>
-                      <FormControl>
-                        <Input 
-                          placeholder="0.00" 
-                          {...field} 
-                          className="bg-black border-white/20 focus:border-white font-mono rounded-none h-12 placeholder:text-white/20"
-                          data-testid="input-bounty"
-                        />
-                      </FormControl>
-                      <FormMessage className="font-mono text-[10px]" />
-                    </FormItem>
-                  )}
-                />
+                <div className="p-4 border border-emerald-500/30 bg-emerald-500/5 space-y-3" data-testid="pricing-info">
+                  <div className="flex items-center gap-2">
+                    <DollarSign className="h-4 w-4 text-emerald-400" />
+                    <span className="text-[10px] uppercase font-mono tracking-widest text-emerald-400 font-bold">PRICING_INFORMATION</span>
+                  </div>
+                  <p className="text-xs font-mono text-muted-foreground leading-relaxed">
+                    We will review your request and determine the final price based on the complexity and scope of your demand. Pricing is based on our standard rate card:
+                  </p>
+                  <ul className="space-y-1 text-xs font-mono text-muted-foreground">
+                    <li className="flex justify-between"><span>ACCOUNT_TAKEOVER</span><span className="text-emerald-400">$50 - $100</span></li>
+                    <li className="flex justify-between"><span>NETWORK_INFILTRATION</span><span className="text-emerald-400">$300</span></li>
+                    <li className="flex justify-between"><span>TARGET_INFILTRATION</span><span className="text-emerald-400">$400 - $500</span></li>
+                    <li className="flex justify-between"><span>DATA_EXTRACTION</span><span className="text-emerald-400">$300</span></li>
+                  </ul>
+                </div>
 
                 <div className="pt-4">
                   <Button 
