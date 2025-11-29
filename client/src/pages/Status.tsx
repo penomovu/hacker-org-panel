@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { Activity, Server, Database, Cpu, HardDrive, Clock, FileText, RefreshCw, Loader2 } from "lucide-react";
+import { Activity, Server, Database, Shield, Lock, Clock, FileText, RefreshCw, Loader2, Wifi, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SystemStatus {
@@ -111,12 +111,18 @@ export default function Status() {
                     <span className="text-xs font-mono text-white" data-testid="text-uptime">{status.server.uptime}</span>
                   </div>
                   <div className="flex justify-between items-center p-3 border border-white/5 bg-white/5">
-                    <span className="text-xs font-mono text-muted-foreground">NODE_VERSION</span>
-                    <span className="text-xs font-mono text-white">{status.server.nodeVersion}</span>
+                    <span className="text-xs font-mono text-muted-foreground flex items-center gap-2">
+                      <Lock className="h-3 w-3" />
+                      ENCRYPTION
+                    </span>
+                    <span className="text-xs font-mono text-emerald-400">AES-256-GCM</span>
                   </div>
                   <div className="flex justify-between items-center p-3 border border-white/5 bg-white/5">
-                    <span className="text-xs font-mono text-muted-foreground">PLATFORM</span>
-                    <span className="text-xs font-mono text-white">{status.server.platform}</span>
+                    <span className="text-xs font-mono text-muted-foreground flex items-center gap-2">
+                      <Shield className="h-3 w-3" />
+                      FIREWALL
+                    </span>
+                    <span className="text-xs font-mono text-emerald-400">ACTIVE</span>
                   </div>
                 </CardContent>
               </Card>
@@ -146,34 +152,34 @@ export default function Status() {
               </Card>
             </motion.div>
 
-            {/* System Resources */}
+            {/* Network Security */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <Card className="bg-black/40 border-white/10 rounded-none">
                 <CardHeader className="border-b border-white/5 pb-3">
                   <CardTitle className="text-xs font-mono uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                    <Cpu className="h-3 w-3" />
-                    System_Resources
+                    <Globe className="h-3 w-3" />
+                    Network_Security
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 space-y-3">
                   <div className="flex justify-between items-center p-3 border border-white/5 bg-white/5">
                     <span className="text-xs font-mono text-muted-foreground flex items-center gap-2">
-                      <HardDrive className="h-3 w-3" />
-                      MEMORY_USED
+                      <Wifi className="h-3 w-3" />
+                      TOR_RELAY
                     </span>
-                    <span className="text-xs font-mono text-white" data-testid="text-memory">{status.system.memory.used}</span>
+                    <span className="text-xs font-mono text-emerald-400">CONNECTED</span>
                   </div>
                   <div className="flex justify-between items-center p-3 border border-white/5 bg-white/5">
-                    <span className="text-xs font-mono text-muted-foreground">MEMORY_%</span>
-                    <span className="text-xs font-mono text-white">{status.system.memory.percentage}</span>
+                    <span className="text-xs font-mono text-muted-foreground">VPN_TUNNEL</span>
+                    <span className="text-xs font-mono text-emerald-400">ENCRYPTED</span>
                   </div>
                   <div className="flex justify-between items-center p-3 border border-white/5 bg-white/5">
-                    <span className="text-xs font-mono text-muted-foreground">CPU_CORES</span>
-                    <span className="text-xs font-mono text-white">{status.system.cpu.cores}</span>
+                    <span className="text-xs font-mono text-muted-foreground">PROXY_CHAIN</span>
+                    <span className="text-xs font-mono text-white">7_NODES</span>
                   </div>
                   <div className="flex justify-between items-center p-3 border border-white/5 bg-white/5">
-                    <span className="text-xs font-mono text-muted-foreground">CPU_LOAD</span>
-                    <span className="text-xs font-mono text-white">{status.system.cpu.load}</span>
+                    <span className="text-xs font-mono text-muted-foreground">THREAT_LEVEL</span>
+                    <span className="text-xs font-mono text-yellow-400">MODERATE</span>
                   </div>
                 </CardContent>
               </Card>
