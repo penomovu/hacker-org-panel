@@ -157,19 +157,19 @@ export default function Request() {
                   )}
                 />
 
-                <div className="p-4 border border-emerald-500/30 bg-emerald-500/5 space-y-3" data-testid="pricing-info">
+                <div className="p-5 border border-emerald-500/30 bg-emerald-500/5 space-y-4" data-testid="pricing-info">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4 text-emerald-400" />
-                    <span className="text-[10px] uppercase font-mono tracking-widest text-emerald-400 font-bold">PRICING_INFORMATION</span>
+                    <DollarSign className="h-5 w-5 text-emerald-400" />
+                    <span className="text-sm uppercase font-mono tracking-widest text-emerald-400 font-bold">PRICING_INFORMATION</span>
                   </div>
-                  <p className="text-xs font-mono text-muted-foreground leading-relaxed">
+                  <p className="text-sm font-mono text-gray-300 leading-relaxed">
                     We will review your request and determine the final price based on the complexity and scope of your demand. Pricing is based on our standard rate card:
                   </p>
-                  <ul className="space-y-1 text-xs font-mono text-muted-foreground">
-                    <li className="flex justify-between"><span>ACCOUNT_TAKEOVER</span><span className="text-emerald-400">$50 - $100</span></li>
-                    <li className="flex justify-between"><span>NETWORK_INFILTRATION</span><span className="text-emerald-400">$300</span></li>
-                    <li className="flex justify-between"><span>TARGET_INFILTRATION</span><span className="text-emerald-400">$400 - $500</span></li>
-                    <li className="flex justify-between"><span>DATA_EXTRACTION</span><span className="text-emerald-400">$300</span></li>
+                  <ul className="space-y-2 text-sm font-mono text-gray-300">
+                    <li className="flex justify-between"><span>ACCOUNT_TAKEOVER</span><span className="text-emerald-400 font-bold">$50 - $100</span></li>
+                    <li className="flex justify-between"><span>NETWORK_INFILTRATION</span><span className="text-emerald-400 font-bold">$300</span></li>
+                    <li className="flex justify-between"><span>TARGET_INFILTRATION</span><span className="text-emerald-400 font-bold">$400 - $500</span></li>
+                    <li className="flex justify-between"><span>DATA_EXTRACTION</span><span className="text-emerald-400 font-bold">$300</span></li>
                   </ul>
                 </div>
 
