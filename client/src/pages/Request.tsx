@@ -14,7 +14,7 @@ import { Upload, ShieldAlert, Loader2, CheckCircle } from "lucide-react";
 
 const formSchema = z.object({
   target: z.string().min(2, "Target identifier required"),
-  type: z.enum(["infiltration", "extraction", "audit", "ddos", "recovery"]),
+  type: z.enum(["target_infiltration", "data_extraction", "account_takeover", "network_breach"]),
   details: z.string().min(10, "More intelligence required"),
   bounty: z.string().min(1, "Bounty offer required"),
 });
@@ -28,7 +28,7 @@ export default function Request() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       target: "",
-      type: "infiltration",
+      type: "target_infiltration",
       details: "",
       bounty: "",
     },
@@ -128,11 +128,10 @@ export default function Request() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className="bg-black border-white/20 rounded-none text-white font-mono">
-                            <SelectItem value="infiltration">DATA_INFILTRATION</SelectItem>
-                            <SelectItem value="extraction">ASSET_EXTRACTION</SelectItem>
-                            <SelectItem value="audit">SECURITY_AUDIT</SelectItem>
-                            <SelectItem value="ddos">STRESS_TESTING</SelectItem>
-                            <SelectItem value="recovery">ACCOUNT_RECOVERY</SelectItem>
+                            <SelectItem value="target_infiltration">TARGET_INFILTRATION</SelectItem>
+                            <SelectItem value="data_extraction">DATA_EXTRACTION</SelectItem>
+                            <SelectItem value="account_takeover">ACCOUNT_TAKEOVER</SelectItem>
+                            <SelectItem value="network_breach">NETWORK_BREACH</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage className="font-mono text-[10px]" />
