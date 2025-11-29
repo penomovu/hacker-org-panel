@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Shield, Terminal, FileText, Activity, Lock } from "lucide-react";
+import { Shield, Terminal, FileText, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import noiseTexture from "@assets/generated_images/subtle_dark_digital_noise_texture.png";
 
@@ -10,7 +10,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/", label: "TERMINAL", icon: Terminal },
     { href: "/request", label: "NEW_CONTRACT", icon: FileText },
     { href: "/status", label: "NETWORK_STATUS", icon: Activity },
-    { href: "/admin", label: "ADMIN_CONSOLE", icon: Lock },
   ];
 
   return (
@@ -30,7 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="mb-12 flex items-center gap-3">
           <Shield className="h-8 w-8 text-white" />
           <div>
-            <h1 className="font-mono font-bold text-lg tracking-tighter leading-none">0x1_ORG</h1>
+            <h1 className="font-mono font-bold text-lg tracking-tighter leading-none">FRAKTUR</h1>
             <p className="text-[10px] text-muted-foreground font-mono">SECURE_CHANNEL_V.9</p>
           </div>
         </div>
@@ -70,12 +69,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 border-b border-border bg-background/90 backdrop-blur-md flex items-center justify-between px-6 z-40">
          <div className="flex items-center gap-2">
           <Shield className="h-6 w-6 text-white" />
-          <span className="font-mono font-bold">0x1</span>
+          <span className="font-mono font-bold">FRAKTUR</span>
          </div>
          <nav className="flex gap-4">
             <Link href="/" className="text-xs font-mono cursor-pointer">TERM</Link>
             <Link href="/request" className="text-xs font-mono cursor-pointer">NEW</Link>
-            <Link href="/admin" className="text-xs font-mono cursor-pointer">ADMIN</Link>
+            <Link href="/status" className="text-xs font-mono cursor-pointer">STATUS</Link>
          </nav>
       </div>
 
