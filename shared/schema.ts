@@ -29,11 +29,10 @@ export const contractStatusEnum = pgEnum("contract_status", [
 
 // Contract type enum
 export const contractTypeEnum = pgEnum("contract_type", [
-  "infiltration",
-  "extraction",
-  "audit",
-  "ddos",
-  "recovery",
+  "target_infiltration",
+  "data_extraction",
+  "account_takeover",
+  "network_breach",
 ]);
 
 // Contracts table
