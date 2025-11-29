@@ -1,17 +1,27 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContractSchema, updateContractStatusSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
 import os from "os";
+import { setupAuth } from "./auth";
+import { sendContractNotification } from "./resend";
 
-// Track server start time
 const serverStartTime = Date.now();
+
+function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ error: "Authentication required" });
+}
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  
+  setupAuth(app);
   
   // ============ CONTRACT ROUTES ============
   
@@ -26,6 +36,14 @@ export async function registerRoutes(
       }
       
       const contract = await storage.createContract(parsed.data);
+      
+      try {
+        await sendContractNotification(contract);
+        console.log("Email notification sent for contract:", contract.id);
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+      }
+      
       res.status(201).json(contract);
     } catch (error) {
       console.error("Error creating contract:", error);
@@ -33,8 +51,8 @@ export async function registerRoutes(
     }
   });
 
-  // Get all contracts (admin)
-  app.get("/api/contracts", async (req, res) => {
+  // Get all contracts (admin - protected)
+  app.get("/api/contracts", ensureAuthenticated, async (req, res) => {
     try {
       const contracts = await storage.getAllContracts();
       res.json(contracts);
@@ -44,8 +62,8 @@ export async function registerRoutes(
     }
   });
 
-  // Get single contract
-  app.get("/api/contracts/:id", async (req, res) => {
+  // Get single contract (admin - protected)
+  app.get("/api/contracts/:id", ensureAuthenticated, async (req, res) => {
     try {
       const contract = await storage.getContract(req.params.id);
       if (!contract) {
@@ -58,8 +76,8 @@ export async function registerRoutes(
     }
   });
 
-  // Update contract status
-  app.patch("/api/contracts/:id/status", async (req, res) => {
+  // Update contract status (admin - protected)
+  app.patch("/api/contracts/:id/status", ensureAuthenticated, async (req, res) => {
     try {
       const parsed = updateContractStatusSchema.safeParse(req.body);
       if (!parsed.success) {
@@ -79,8 +97,8 @@ export async function registerRoutes(
     }
   });
 
-  // Delete contract
-  app.delete("/api/contracts/:id", async (req, res) => {
+  // Delete contract (admin - protected)
+  app.delete("/api/contracts/:id", ensureAuthenticated, async (req, res) => {
     try {
       const success = await storage.deleteContract(req.params.id);
       if (!success) {
