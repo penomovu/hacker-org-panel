@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Terminal, FileText, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import noiseTexture from "@assets/generated_images/subtle_dark_digital_noise_texture.png";
-import frakturLogo from "@assets/fraktur_logo.png";
+import frakturLogo from "@assets/aec786bb-86a6-4f0f-a7f1-dd5509603aa8__1_-removebg-preview_1764458176929.png";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -27,13 +27,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
       
       {/* Sidebar */}
       <aside className="w-64 border-r border-border bg-card/50 backdrop-blur-sm hidden md:flex flex-col p-6 z-10">
-        <div className="mb-12 flex items-center justify-center">
+        <div className="mb-12 flex flex-col items-center justify-center gap-2">
           <img 
             src={frakturLogo} 
             alt="Fraktur Logo" 
-            className="h-32 w-32 drop-shadow-[0_0_20px_rgba(239,68,68,0.9)]"
+            className="h-20 w-20 drop-shadow-[0_0_20px_rgba(239,68,68,0.9)]"
             style={{ filter: 'brightness(0) saturate(100%) invert(31%) sepia(98%) saturate(2000%) hue-rotate(343deg) brightness(95%) contrast(95%)' }}
           />
+          <span className="text-red-500 font-bold text-2xl tracking-widest font-mono drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]">FRAKTUR</span>
         </div>
 
         <nav className="space-y-2 flex-1">
@@ -69,13 +70,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 border-b border-border bg-background/90 backdrop-blur-md flex items-center justify-between px-6 z-40">
-         <div className="flex items-center">
+         <div className="flex items-center gap-2">
           <img 
             src={frakturLogo} 
             alt="Fraktur Logo" 
-            className="h-12 w-12 drop-shadow-[0_0_10px_rgba(239,68,68,0.9)]"
+            className="h-10 w-10 drop-shadow-[0_0_10px_rgba(239,68,68,0.9)]"
             style={{ filter: 'brightness(0) saturate(100%) invert(31%) sepia(98%) saturate(2000%) hue-rotate(343deg) brightness(95%) contrast(95%)' }}
           />
+          <span className="text-red-500 font-bold text-lg tracking-widest font-mono">FRAKTUR</span>
          </div>
          <nav className="flex gap-4">
             <Link href="/" className="text-xs font-mono cursor-pointer">TERM</Link>
