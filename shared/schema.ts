@@ -41,7 +41,7 @@ export const contracts = pgTable("contracts", {
   target: text("target").notNull(),
   type: contractTypeEnum("type").notNull(),
   details: text("details").notNull(),
-  bounty: text("bounty").notNull(),
+  bounty: text("bounty").default("TBD"),
   status: contractStatusEnum("status").notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
@@ -50,6 +50,7 @@ export const contracts = pgTable("contracts", {
 export const insertContractSchema = createInsertSchema(contracts).omit({
   id: true,
   status: true,
+  bounty: true,
   createdAt: true,
   updatedAt: true,
 });
