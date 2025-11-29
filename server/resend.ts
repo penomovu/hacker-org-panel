@@ -49,16 +49,15 @@ export async function sendContractNotification(contract: {
     const { client, fromEmail } = await getUncachableResendClient();
     
     const typeLabels: Record<string, string> = {
-      infiltration: "DATA_INFILTRATION",
-      extraction: "ASSET_EXTRACTION",
-      audit: "SECURITY_AUDIT",
-      ddos: "STRESS_TESTING",
-      recovery: "ACCOUNT_RECOVERY",
+      target_infiltration: "TARGET_INFILTRATION",
+      data_extraction: "DATA_EXTRACTION",
+      account_takeover: "ACCOUNT_TAKEOVER",
+      network_breach: "NETWORK_BREACH",
     };
 
     const result = await client.emails.send({
-      from: fromEmail || 'onboarding@resend.dev',
-      to: 'nueju@proton.me',
+      from: 'onboarding@resend.dev',
+      to: 'ronio8641@gmail.com',
       subject: `[SHADOW_NETWORK] New Contract: ${contract.id.slice(0, 8).toUpperCase()}`,
       html: `
         <div style="font-family: monospace; background: #0a0a0a; color: #fff; padding: 30px; max-width: 600px;">
