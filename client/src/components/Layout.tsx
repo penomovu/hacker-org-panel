@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
-import { Terminal, FileText, Activity } from "lucide-react";
+import { Terminal, FileText, Activity, LogIn } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import noiseTexture from "@assets/generated_images/subtle_dark_digital_noise_texture.png";
 import frakturLogo from "@assets/aec786bb-86a6-4f0f-a7f1-dd5509603aa8__1_-removebg-preview_1764458176929.png";
@@ -15,7 +16,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div 
-      className="min-h-screen w-full bg-background text-foreground font-sans selection:bg-primary selection:text-background relative overflow-hidden flex"
+      className="min-h-screen w-full bg-background text-foreground font-sans selection:bg-primary selection:text-background relative overflow-hidden flex flex-col"
       style={{
         backgroundImage: `url(${noiseTexture})`,
         backgroundBlendMode: 'overlay',
@@ -25,69 +26,47 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* CRT Scanline Effect */}
       <div className="scanline z-50 pointer-events-none fixed inset-0" />
       
-      {/* Sidebar */}
-      <aside className="w-64 border-r border-border bg-card/50 backdrop-blur-sm hidden md:flex flex-col p-6 z-10">
-        <div className="mb-12 flex flex-col items-center justify-center gap-2">
-          <img 
-            src={frakturLogo} 
-            alt="Fraktur Logo" 
-            className="h-20 w-20 drop-shadow-[0_0_20px_rgba(239,68,68,0.9)]"
-            style={{ filter: 'brightness(0) saturate(100%) invert(31%) sepia(98%) saturate(2000%) hue-rotate(343deg) brightness(95%) contrast(95%)' }}
-          />
-          <span className="text-red-500 font-bold text-2xl tracking-widest font-mono drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]">FRAKTUR</span>
+      {/* Top Navbar */}
+      <header className="fixed top-0 left-0 right-0 h-16 border-b border-border bg-background/90 backdrop-blur-md flex items-center justify-between px-6 z-40">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <img 
+              src={frakturLogo} 
+              alt="Fraktur Logo" 
+              className="h-10 w-10 drop-shadow-[0_0_10px_rgba(239,68,68,0.9)]"
+              style={{ filter: 'brightness(0) saturate(100%) invert(31%) sepia(98%) saturate(2000%) hue-rotate(343deg) brightness(95%) contrast(95%)' }}
+            />
+            <span className="text-red-500 font-bold text-lg tracking-widest font-mono">FRAKTUR</span>
+          </div>
+
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => {
+              const isActive = location === item.href;
+              return (
+                <Link key={item.href} href={item.href} className={cn(
+                  "flex items-center gap-2 px-4 py-2 text-xs font-mono tracking-widest transition-all duration-200 border border-transparent cursor-pointer",
+                  isActive 
+                    ? "bg-white text-black border-white shadow-[0_0_10px_rgba(255,255,255,0.3)]" 
+                    : "text-muted-foreground hover:text-white hover:border-white/20 hover:bg-white/5"
+                )} data-testid={`nav-${item.href.replace("/", "") || "home"}`}>
+                  <item.icon className="h-3 w-3" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-        <nav className="space-y-2 flex-1">
-          {navItems.map((item) => {
-            const isActive = location === item.href;
-            return (
-              <Link key={item.href} href={item.href} className={cn(
-                "flex items-center gap-3 px-4 py-3 text-xs font-mono tracking-widest transition-all duration-200 group relative overflow-hidden border border-transparent cursor-pointer",
-                isActive 
-                  ? "bg-white text-black border-white shadow-[0_0_10px_rgba(255,255,255,0.3)]" 
-                  : "text-muted-foreground hover:text-white hover:border-white/20 hover:bg-white/5"
-              )} data-testid={`nav-${item.href.replace("/", "") || "home"}`}>
-                <item.icon className="h-4 w-4" />
-                {item.label}
-                {isActive && (
-                  <div className="absolute right-2 w-1.5 h-1.5 bg-black rounded-full animate-pulse" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="mt-auto pt-6 border-t border-border">
-          <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>SYSTEM_ONLINE</span>
-          </div>
-          <div className="mt-1 text-[10px] font-mono text-muted-foreground/50">
-            ID: {Math.random().toString(36).substring(7).toUpperCase()}
-          </div>
-        </div>
-      </aside>
-
-      {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 border-b border-border bg-background/90 backdrop-blur-md flex items-center justify-between px-6 z-40">
-         <div className="flex items-center gap-2">
-          <img 
-            src={frakturLogo} 
-            alt="Fraktur Logo" 
-            className="h-10 w-10 drop-shadow-[0_0_10px_rgba(239,68,68,0.9)]"
-            style={{ filter: 'brightness(0) saturate(100%) invert(31%) sepia(98%) saturate(2000%) hue-rotate(343deg) brightness(95%) contrast(95%)' }}
-          />
-          <span className="text-red-500 font-bold text-lg tracking-widest font-mono">FRAKTUR</span>
-         </div>
-         <nav className="flex gap-4">
-            <Link href="/" className="text-xs font-mono cursor-pointer">TERM</Link>
-            <Link href="/request" className="text-xs font-mono cursor-pointer">NEW</Link>
-            <Link href="/status" className="text-xs font-mono cursor-pointer">STATUS</Link>
-         </nav>
-      </div>
+        <Link href="/portal">
+          <Button className="h-10 px-6 bg-red-500 text-white hover:bg-red-600 transition-all duration-300 font-mono tracking-widest text-xs border border-red-500 rounded-none" data-testid="button-connect">
+            <LogIn className="mr-2 h-4 w-4" />
+            CONNECT
+          </Button>
+        </Link>
+      </header>
 
       {/* Main Content */}
-      <main className="flex-1 relative z-10 overflow-y-auto pt-16 md:pt-0">
+      <main className="flex-1 relative z-10 overflow-y-auto pt-16">
         <div className="max-w-5xl mx-auto p-6 md:p-12">
           {children}
         </div>
