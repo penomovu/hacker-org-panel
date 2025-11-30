@@ -24,7 +24,7 @@ export default function AdminLogin() {
 
   useEffect(() => {
     if (user) {
-      setLocation("/operator-console-7x3");
+      setLocation("/ctrl-f7a2c8e1-4b9d-4f6a-a3c8-9d1e0f3b5a7c");
     }
   }, [user, setLocation]);
 
