@@ -16,6 +16,20 @@ function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
   res.status(401).json({ error: "Authentication required" });
 }
 
+function ensureAdmin(req: Request, res: Response, next: NextFunction) {
+  if (req.isAuthenticated() && req.user?.role === "admin" && (req.session as any).isAdminSession === true) {
+    return next();
+  }
+  res.status(403).json({ error: "Admin access required" });
+}
+
+function ensureClient(req: Request, res: Response, next: NextFunction) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ error: "Authentication required" });
+}
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -23,9 +37,8 @@ export async function registerRoutes(
   
   setupAuth(app);
   
-  // ============ CONTRACT ROUTES ============
+  // ============ CLIENT CONTRACT ROUTES ============
   
-  // Create a new contract
   app.post("/api/contracts", async (req, res) => {
     try {
       const parsed = insertContractSchema.safeParse(req.body);
@@ -35,7 +48,12 @@ export async function registerRoutes(
         });
       }
       
-      const contract = await storage.createContract(parsed.data);
+      const contractData = {
+        ...parsed.data,
+        userId: req.isAuthenticated() ? req.user!.id : null,
+      };
+      
+      const contract = await storage.createContract(contractData);
       
       try {
         await sendContractNotification(contract);
@@ -51,8 +69,35 @@ export async function registerRoutes(
     }
   });
 
-  // Get all contracts (admin - protected)
-  app.get("/api/contracts", ensureAuthenticated, async (req, res) => {
+  app.get("/api/client/contracts", ensureClient, async (req, res) => {
+    try {
+      const contracts = await storage.getContractsByUserId(req.user!.id);
+      res.json(contracts);
+    } catch (error) {
+      console.error("Error fetching client contracts:", error);
+      res.status(500).json({ error: "Failed to fetch contracts" });
+    }
+  });
+
+  app.get("/api/client/contracts/:id", ensureClient, async (req, res) => {
+    try {
+      const contract = await storage.getContract(req.params.id);
+      if (!contract) {
+        return res.status(404).json({ error: "Contract not found" });
+      }
+      if (contract.userId !== req.user!.id) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+      res.json(contract);
+    } catch (error) {
+      console.error("Error fetching contract:", error);
+      res.status(500).json({ error: "Failed to fetch contract" });
+    }
+  });
+
+  // ============ ADMIN CONTRACT ROUTES ============
+
+  app.get("/api/contracts", ensureAdmin, async (req, res) => {
     try {
       const contracts = await storage.getAllContracts();
       res.json(contracts);
@@ -62,8 +107,7 @@ export async function registerRoutes(
     }
   });
 
-  // Get single contract (admin - protected)
-  app.get("/api/contracts/:id", ensureAuthenticated, async (req, res) => {
+  app.get("/api/contracts/:id", ensureAdmin, async (req, res) => {
     try {
       const contract = await storage.getContract(req.params.id);
       if (!contract) {
@@ -76,8 +120,7 @@ export async function registerRoutes(
     }
   });
 
-  // Update contract status (admin - protected)
-  app.patch("/api/contracts/:id/status", ensureAuthenticated, async (req, res) => {
+  app.patch("/api/contracts/:id/status", ensureAdmin, async (req, res) => {
     try {
       const parsed = updateContractStatusSchema.safeParse(req.body);
       if (!parsed.success) {
@@ -97,8 +140,7 @@ export async function registerRoutes(
     }
   });
 
-  // Delete contract (admin - protected)
-  app.delete("/api/contracts/:id", ensureAuthenticated, async (req, res) => {
+  app.delete("/api/contracts/:id", ensureAdmin, async (req, res) => {
     try {
       const success = await storage.deleteContract(req.params.id);
       if (!success) {
@@ -120,7 +162,6 @@ export async function registerRoutes(
       const uptimeMinutes = Math.floor(uptimeSeconds / 60);
       const uptimeHours = Math.floor(uptimeMinutes / 60);
       
-      // Check database connectivity
       let dbStatus = "OFFLINE";
       let dbLatency = 0;
       try {
@@ -132,7 +173,6 @@ export async function registerRoutes(
         dbStatus = "ERROR";
       }
 
-      // Get contract stats
       const FAKE_BASE_TOTAL = 241;
       let contractStats = { total: 0, pending: 0, active: 0, completed: 0 };
       try {
