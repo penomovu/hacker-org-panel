@@ -27,7 +27,7 @@ export function ProtectedRoute({
   if (!user) {
     return (
       <Route path={path}>
-        <Redirect to="/operator-login" />
+        <Redirect to="/auth-e9b7d4a2-5c1f-4e8a-b6d3-7f2a1c9e0b4d" />
       </Route>
     );
   }
