@@ -43,7 +43,7 @@ export async function sendContractNotification(contract: {
   target: string;
   type: string;
   details: string;
-  bounty: string;
+  bounty: string | null;
 }) {
   try {
     const { client, fromEmail } = await getUncachableResendClient();
@@ -82,7 +82,7 @@ export async function sendContractNotification(contract: {
                 </tr>
                 <tr>
                   <td style="padding: 10px 0; color: #888; font-size: 12px;">BOUNTY:</td>
-                  <td style="padding: 10px 0; color: #eab308;">${contract.bounty}</td>
+                  <td style="padding: 10px 0; color: #eab308;">${contract.bounty || "TBD"}</td>
                 </tr>
               </table>
             </div>
