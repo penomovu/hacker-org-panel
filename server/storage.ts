@@ -4,6 +4,7 @@ import {
   type Contract, 
   type InsertContract, 
   type ContractStatus,
+  type UserRole,
   users,
   contracts 
 } from "@shared/schema";
@@ -20,11 +21,13 @@ export interface IStorage {
   // User methods
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  createUser(user: InsertUser & { role?: UserRole }): Promise<User>;
   
   // Contract methods
-  createContract(contract: InsertContract): Promise<Contract>;
+  createContract(contract: InsertContract & { userId?: string | null }): Promise<Contract>;
   getContract(id: string): Promise<Contract | undefined>;
+  getContractsByUserId(userId: string): Promise<Contract[]>;
   getAllContracts(): Promise<Contract[]>;
   updateContractStatus(id: string, status: ContractStatus): Promise<Contract | undefined>;
   deleteContract(id: string): Promise<boolean>;
@@ -50,13 +53,18 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async createUser(insertUser: InsertUser & { role?: UserRole }): Promise<User> {
     const [user] = await db.insert(users).values(insertUser).returning();
     return user;
   }
 
   // Contract methods
-  async createContract(contract: InsertContract): Promise<Contract> {
+  async createContract(contract: InsertContract & { userId?: string | null }): Promise<Contract> {
     const [newContract] = await db.insert(contracts).values(contract).returning();
     return newContract;
   }
@@ -64,6 +72,10 @@ export class DatabaseStorage implements IStorage {
   async getContract(id: string): Promise<Contract | undefined> {
     const [contract] = await db.select().from(contracts).where(eq(contracts.id, id));
     return contract;
+  }
+
+  async getContractsByUserId(userId: string): Promise<Contract[]> {
+    return db.select().from(contracts).where(eq(contracts.userId, userId)).orderBy(desc(contracts.createdAt));
   }
 
   async getAllContracts(): Promise<Contract[]> {
