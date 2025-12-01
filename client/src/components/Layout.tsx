@@ -1,12 +1,14 @@
 import { Link, useLocation } from "wouter";
-import { Terminal, FileText, Activity, LogIn } from "lucide-react";
+import { Terminal, FileText, Activity, LogIn, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useClientAuth } from "@/hooks/use-client-auth";
 import noiseTexture from "@assets/generated_images/subtle_dark_digital_noise_texture.png";
 import frakturLogo from "@assets/aec786bb-86a6-4f0f-a7f1-dd5509603aa8__1_-removebg-preview_1764458176929.png";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
+  const { user } = useClientAuth();
 
   const navItems = [
     { href: "/", label: "TERMINAL", icon: Terminal },
@@ -57,10 +59,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
 
-        <Link href="/portal">
-          <Button className="h-10 px-6 bg-red-500 text-white hover:bg-red-600 transition-all duration-300 font-mono tracking-widest text-xs border border-red-500 rounded-none" data-testid="button-connect">
-            <LogIn className="mr-2 h-4 w-4" />
-            CONNECT
+        <Link href={user ? "/dashboard" : "/portal"}>
+          <Button className="h-10 px-6 bg-red-500 text-white hover:bg-red-600 transition-all duration-300 font-mono tracking-widest text-xs border border-red-500 rounded-none" data-testid={user ? "button-account" : "button-connect"}>
+            {user ? <User className="mr-2 h-4 w-4" /> : <LogIn className="mr-2 h-4 w-4" />}
+            {user ? "ACCOUNT" : "CONNECT"}
           </Button>
         </Link>
       </header>
